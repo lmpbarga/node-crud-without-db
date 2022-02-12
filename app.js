@@ -24,32 +24,35 @@ app.get('/users', (req, res) => {
   res.send(users)
 })
 
-app.post('/user', function (req, res) {
+app.post('/users', function (req, res) {
   users.push(req.body)
   res.sendStatus(200)
 })
 
-app.get('/user/:id', function (req, res) {
+app.get('/users/:id', function (req, res) {
   const { id } = req.params
   const user = users.find(user => user.id === id)
 
   res.status(200).send(user)
 })
 
-app.put('/user/:id', function (req, res) {
+app.put('/users/:id', function (req, res) {
   const { id } = req.params
-  const userNewData = req.body
+  const {name} = req.body
   const userIndex = users.findIndex(user => user.id === id)
 
-  if(userIndex && userNewData) {
+  if(userIndex) {
     users.splice(userIndex, 1);
-    users.push(req.body)
+    users.push({
+      id,
+      name
+    })
   }
 
-  res.status(200).send(req.body)
+  res.sendStatus(200)
 })
 
-app.delete('/user/:id', function (req, res) {
+app.delete('/users/:id', function (req, res) {
   const { id } = req.params
   const userIndex = users.findIndex(user => user.id === id)
   if(userIndex !== -1){``
